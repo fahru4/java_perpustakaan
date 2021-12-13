@@ -64,7 +64,7 @@ public abstract class BaseDao<T extends BaseEntity<T>> {
 
     public T save(T entity){
         if(entity != null && entity.getId() == null){
-
+            entityManager.persist(entity);
             return entity;
         }
         return entity;
