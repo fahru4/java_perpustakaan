@@ -1,5 +1,6 @@
 package com.fahruzydow.perpustakaan.dao;
 
+import com.fahruzydow.perpustakaan.entity.Book;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;

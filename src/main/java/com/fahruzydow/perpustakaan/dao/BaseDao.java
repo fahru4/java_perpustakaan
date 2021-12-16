@@ -18,13 +18,13 @@ import java.util.List;
 
 @SuppressWarnings({"unchecked", "ConstantConditions"})
 public abstract class BaseDao<T extends BaseEntity<T>> {
+
     @PersistenceContext
     protected EntityManager entityManager;
 
     private Class<T> type;
-
     {
-        this.type = (Class<T>)((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     public T findOne(T param){
@@ -53,26 +53,28 @@ public abstract class BaseDao<T extends BaseEntity<T>> {
 
     public Long count(T param){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
 
         Root<T> root = query.from(type);
 
         query.select(builder.count(root));
 
-        return singleResult(query, predicates(param, builder, root, true));
+        return singleResult(query, predicates(param, builder, root, false));
     }
 
     public T save(T entity){
-        if(entity != null && entity.getId() == null){
+        if (entity != null && entity.getId() == null) {
             entityManager.persist(entity);
+
             return entity;
         }
         return entity;
     }
 
     public T update(T entity){
-        if(entity != null && entity.getId() == null){
-            return reference = findReference(entity.getId());
+        if (entity != null && entity.getId() != null) {
+            T reference = findReference(entity.getId());
 
             entity.setCreatedTime(reference.getCreatedTime());
 
@@ -86,10 +88,10 @@ public abstract class BaseDao<T extends BaseEntity<T>> {
     }
 
     public T delete(T entity){
-        if(entity != null && entity.getId() != null){
+        if (entity != null && entity.getId() != null){
             T reference = findReference(entity.getId());
 
-            if(reference != null){
+            if (reference != null){
                 entityManager.remove(entity);
 
                 return entity;
@@ -115,7 +117,7 @@ public abstract class BaseDao<T extends BaseEntity<T>> {
 
         }
 
-        return  null;
+        return null;
     }
 
     public List<T> listResult(CriteriaQuery<T> query, List<Predicate> predicates, int offset, int limit){
@@ -124,10 +126,10 @@ public abstract class BaseDao<T extends BaseEntity<T>> {
 
         TypedQuery<T> typedQuery = entityManager.createQuery(query);
 
-        if(limit != Integer.MAX_VALUE){
+        if (limit != Integer.MAX_VALUE){
             typedQuery.setMaxResults(limit);
         }
 
-        return typedQuery.setMaxResults(offset).getResultList();
+        return typedQuery.setFirstResult(offset).getResultList();
     }
 }
