@@ -16,6 +16,7 @@ import java.util.Date;
 public class Loan extends BaseEntity<Loan> {
 
     private static final long serialVersionUID = -2337360730052180194L;
+    public Object getStatus;
 
 
     public enum StatusLoan{
@@ -40,9 +41,13 @@ public class Loan extends BaseEntity<Loan> {
     @Temporal(TemporalType.DATE)
     private Date returnDate;
 
+//    @Column(name = "status")
+//    @Enumerated(EnumType.STRING)
+//    private Date statusLoan;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private Date status;
+    private StatusLoan status = StatusLoan.BORROWED;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")

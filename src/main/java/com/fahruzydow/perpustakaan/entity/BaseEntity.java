@@ -32,7 +32,7 @@ public abstract class BaseEntity<T> implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedTime;
 
-    @PrePersist
+    @PreUpdate
     protected void onCreate(){
         setCreatedTime(new Date());
     }

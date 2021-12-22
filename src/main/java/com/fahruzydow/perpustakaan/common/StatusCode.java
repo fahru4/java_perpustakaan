@@ -9,7 +9,9 @@ public interface StatusCode {
     String DELETE_FAILED = "0015";
 
     String OPERATION_SUCCESS = "1112";
-    String OPERATION_DELETE = "1113";
+    String OPERATION_FAILED = "1113";
 
-
+    String PASSWORD_OR_USER_NOT_REGISTERED = "0111";
+    String LOGIN_SUCCESS = "0112";
+    String LOGIN_FAILED = "0113";
 }
